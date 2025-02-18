@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os"
 	"strings"
+	"time"
 )
 
 // Client type
@@ -38,6 +39,13 @@ func Open(name string, options ...ClientOption) (io.ReadCloser, error) {
 func WithHTTPClient(v *http.Client) ClientOption {
 	return func(c *Client) error {
 		c.httpClient = v
+		return nil
+	}
+}
+
+func WithTimeout(d time.Duration) ClientOption {
+	return func(c *Client) error {
+		c.httpClient.Timeout = d
 		return nil
 	}
 }
